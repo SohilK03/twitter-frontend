@@ -1,6 +1,7 @@
 import axios from "axios";
 // import { getAuthToken } from "./Utils/Local";
 
+
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
 // if (getAuthToken()) {
@@ -9,7 +10,7 @@ axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 //   delete axios.defaults.headers.common["token"];
 // }
 export default axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: "https://stark-wave-84229.herokuapp.com/",
   headers: {
     Accept: "applications/json",
   },
