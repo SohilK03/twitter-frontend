@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Image, Button, Container } from "react-bootstrap";
 import hero_img from "../Assets/Login/hero_img.png";
 import logo from "../Assets/logo.svg";
 import google from "../Assets/Login/google.svg";
-import apple from "../Assets/Login/apple.svg";
-export default function Login() {
+import LocalLogin from "./LocalLogin";
+import LocalSignUp from "./LocalSignUp";
+import { connect } from "react-redux";
+import { LoginGoogle } from "../Redux/Actions/userActions";
+
+const Login = (props) => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [showSign, setShowSign] = useState(false);
+
+  const handleCloseSign = () => setShowSign(false);
+  const handleShowSign = () => setShowSign(true);
+
   return (
     <Container fluid>
-      <Row>
+      <Row className="h-100-vh">
         <Col
           sm={{ span: 12, order: "last" }}
           md={{ span: 7, order: "first" }}
@@ -49,24 +62,21 @@ export default function Login() {
                 Join Twitter today.
               </h3>
             </Row>
-            <Row className="w-sm-100 w-md-65">
-              <Button
-                variant="light"
-                className="rounded-pill btn-lg w-100 mb-1 d-flex align-items-center justify-content-center"
-              >
-                <Image src={google} width="30px" className="mr-1" />
-                Sign up with Google
-              </Button>
-            </Row>
-            <Row className="w-sm-100 w-md-65">
-              <Button
-                variant="light"
-                className="rounded-pill btn-lg w-100  d-flex align-items-center justify-content-center"
-              >
-                <Image src={apple} width="30px" className="mr-1" />
-                Sign up with Apple
-              </Button>
-            </Row>
+            <a
+              style={{ textDecoration: "none" }}
+              href="http://localhost:5000/users/auth/google"
+            >
+              <Row className="w-sm-100 w-md-65">
+                <Button
+                  variant="light"
+                  className="rounded-pill btn-lg w-100 mb-1 d-flex align-items-center justify-content-center"
+                >
+                  <Image src={google} width="30px" className="mr-1" />
+                  Login with Google
+                </Button>
+              </Row>{" "}
+            </a>
+
             <Row className="d-flex text-light w-sm-100 w-md-65 align-items-center justify-content-center">
               <hr style={{ width: "40%" }} />
               or
@@ -76,8 +86,9 @@ export default function Login() {
               <Button
                 variant="primary"
                 className="rounded-pill btn-lg w-100  mb-1"
+                onClick={handleShowSign}
               >
-                Sign up with Phone or Email
+                Sign up with Email
               </Button>
               <p style={{ fontSize: "0.8rem" }} className="text-gray">
                 By signing up, you agree to the
@@ -94,6 +105,7 @@ export default function Login() {
                 <Button
                   variant="outline-light"
                   className="rounded-pill btn-lg w-100"
+                  onClick={handleShow}
                 >
                   Sign in
                 </Button>
@@ -102,6 +114,10 @@ export default function Login() {
           </Container>
         </Col>
       </Row>
+      <LocalLogin show={show} onHide={handleClose} />
+      <LocalSignUp show={showSign} onHide={handleCloseSign} />
     </Container>
   );
-}
+};
+const mapStateToProps = (state) => ({ user: state.user });
+export default connect(mapStateToProps, { LoginGoogle })(Login);

@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "../Components/Login";
-function LoginPage() {
+import { connect } from "react-redux";
+function LoginPage(props) {
+  useEffect(() => {
+    if (props.user.isLoggedIn) window.location.href = "/home";
+  });
+
   return <Login />;
 }
-
-export default LoginPage;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+export default connect(mapStateToProps, {})(LoginPage);
