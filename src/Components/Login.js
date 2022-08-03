@@ -65,7 +65,7 @@ const Login = (props) => {
             </Row>
             <a
               style={{ textDecoration: "none" }}
-              href={`${baseUrl}/users/auth/google`}
+              href={`${baseUrl}users/auth/google`}
             >
               <Row className="w-sm-100 w-md-65">
                 <Button
