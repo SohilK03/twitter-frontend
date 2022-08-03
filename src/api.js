@@ -16,4 +16,4 @@ export default axios.create({
   },
 });
 
-export const baseUrl = "http://localhost:5000/";
+export const baseUrl = "https://stark-wave-84229.herokuapp.com/";

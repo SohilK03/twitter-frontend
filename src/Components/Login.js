@@ -7,6 +7,7 @@ import LocalLogin from "./LocalLogin";
 import LocalSignUp from "./LocalSignUp";
 import { connect } from "react-redux";
 import { LoginGoogle } from "../Redux/Actions/userActions";
+import { baseUrl } from "../api";
 
 const Login = (props) => {
   const [show, setShow] = useState(false);
@@ -64,7 +65,7 @@ const Login = (props) => {
             </Row>
             <a
               style={{ textDecoration: "none" }}
-              href="http://localhost:5000/users/auth/google"
+              href={`${baseUrl}/users/auth/google`}
             >
               <Row className="w-sm-100 w-md-65">
                 <Button
