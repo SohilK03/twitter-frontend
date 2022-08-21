@@ -7,6 +7,7 @@ import {
   // eslint-disable-next-line no-unused-vars
   LIKE_TWEET_SUCCESS,
   LIKE_TWEET_FAIL,
+  ADD_TWEET_SUCCESS,
 } from "../Constants/tweetConstants";
 export const getAllTweets = () => (dispatch) => {
   dispatch({ type: GET_TWEETS });
@@ -21,4 +22,10 @@ export const likeTweet = (id) => (dispatch) => {
     .post(`/tweets/like/${id}`)
     .then((res) => getAllTweets())
     .catch((err) => dispatch({ type: LIKE_TWEET_FAIL }));
+};
+
+export const addTweet = (data) => (dispatch) => {
+  axios
+    .post("/tweets/",  data )
+    .then((res) => dispatch({ type: ADD_TWEET_SUCCESS }));
 };

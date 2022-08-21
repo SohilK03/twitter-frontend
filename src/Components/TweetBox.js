@@ -4,26 +4,23 @@ import { Avatar, Button } from "@material-ui/core";
 // import db from "./firebase";
 import { connect } from "react-redux";
 import profilePhoto from "../Assets/profile-icon.png";
-
+import { addTweet, getAllTweets } from "../Redux/Actions/tweetActions";
 function TweetBox(props) {
   const [tweetMessage, setTweetMessage] = useState("");
   const [tweetImage, setTweetImage] = useState("");
 
   const sendTweet = (e) => {
     e.preventDefault();
-
-    // db.collection("posts").add({
-    //   displayName: "Rafeh Qazi",
-    //   username: "cleverqazi",
-    //   verified: true,
-    //   text: tweetMessage,
-    //   image: tweetImage,
-    //   avatar:
-    //     "https://kajabi-storefronts-production.global.ssl.fastly.net/kajabi-storefronts-production/themes/284832/settings_images/rLlCifhXRJiT0RoN2FjK_Logo_roundbackground_black.png",
-    // });
-
+    console.log(props.user);
+    const data = {
+      name: props.user.user.name,
+      text: tweetMessage,
+      image: tweetImage,
+    };
+    props.addTweet(data);
     setTweetMessage("");
     setTweetImage("");
+    props.getAllTweets();
   };
 
   return (
@@ -32,7 +29,9 @@ function TweetBox(props) {
         <div className="tweetBox__input">
           <Avatar
             src={
-              props.user.profilePhoto ? props.user.profilePhoto : profilePhoto
+              props.user.data.profilePhoto
+                ? props.user.profilePhoto
+                : profilePhoto
             }
           />
           <input
@@ -64,4 +63,4 @@ function TweetBox(props) {
   );
 }
 const mapStateToProps = (state) => ({ user: state.user });
-export default connect(mapStateToProps, null)(TweetBox);
+export default connect(mapStateToProps, { addTweet, getAllTweets })(TweetBox);

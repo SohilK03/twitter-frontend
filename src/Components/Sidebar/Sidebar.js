@@ -11,8 +11,15 @@ import ListAltIcon from "@material-ui/icons/ListAlt";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { Button } from "@material-ui/core";
-
-function Sidebar() {
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import { connect } from "react-redux";
+import { logoutUser } from "../../Redux/Actions/userActions";
+function Sidebar(props) {
+  const logOutUser = (e) => {
+    console.log("inside");
+    props.logoutUser();
+    window.location("/");
+  };
   return (
     <div className="sidebar">
       <TwitterIcon className="sidebar__twitterIcon" />
@@ -25,6 +32,11 @@ function Sidebar() {
       <SidebarOption Icon={ListAltIcon} text="Lists" />
       <SidebarOption Icon={PermIdentityIcon} text="Profile" />
       <SidebarOption Icon={MoreHorizIcon} text="More" />
+      <SidebarOption
+        Icon={PowerSettingsNewIcon}
+        text="Logout"
+        onClick={logOutUser}
+      />
 
       {/* Button -> Tweet */}
       <Button variant="outlined" className="sidebar__tweet" fullWidth>
@@ -34,4 +46,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default connect(null, { logoutUser })(Sidebar);

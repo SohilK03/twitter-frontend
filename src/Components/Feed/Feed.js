@@ -26,7 +26,7 @@ function Feed(props) {
           <Post
             key={post.text}
             displayName={post.name}
-            username={post.name.split(" ").join("").toLowerCase()}
+            username={post.name?.split(" ").join("").toLowerCase()}
             verified={true}
             text={post.text}
             image={post.image}
