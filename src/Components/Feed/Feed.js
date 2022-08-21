@@ -1,15 +1,16 @@
-import React, { useState,useEffect } from "react";
+import React, { useEffect } from "react";
 import TweetBox from "../TweetBox";
 import Post from "../Post";
 import "./Feed.css";
 // import db from "./firebase";
 import FlipMove from "react-flip-move";
+import { getAllTweets } from "../../Redux/Actions/tweetActions";
+import { connect } from "react-redux";
 
-function Feed() {
-  const [posts, setPosts] = useState([]);
-
+function Feed(props) {
   useEffect(() => {
-    setPosts([]);
+    props.getAllTweets();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -21,20 +22,21 @@ function Feed() {
       <TweetBox />
 
       <FlipMove>
-        {posts.map((post) => (
+        {props.tweets.tweets?.map((post) => (
           <Post
             key={post.text}
-            displayName={post.displayName}
-            username={post.username}
-            verified={post.verified}
+            displayName={post.name}
+            username={post.name.split(" ").join("").toLowerCase()}
+            verified={true}
             text={post.text}
-            avatar={post.avatar}
             image={post.image}
+            likes={post.likes}
+            id={post._id}
           />
         ))}
       </FlipMove>
     </div>
   );
 }
-
-export default Feed;
+const mapStateToProps = (state) => ({ tweets: state.tweets });
+export default connect(mapStateToProps, { getAllTweets })(Feed);

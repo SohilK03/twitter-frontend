@@ -1,14 +1,39 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import "./Post.css";
 import { Avatar } from "@material-ui/core";
-import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import RepeatIcon from "@material-ui/icons/Repeat";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import PublishIcon from "@material-ui/icons/Publish";
-
+import verified_photo from "../Assets/Twitter_Verified_Badge.svg.png";
+import { connect } from "react-redux";
+import { likeTweet } from "../Redux/Actions/tweetActions";
 const Post = forwardRef(
-  ({ displayName, username, verified, text, image, avatar }, ref) => {
+  (
+    {
+      displayName,
+      username,
+      verified,
+      text,
+      image,
+      avatar,
+      likes,
+      id,
+      likeTweet,
+    },
+    ref
+  ) => {
+    const [liked, setLiked] = useState(false);
+    const LikePost = (e) => {
+      if (!liked) {
+        console.log("want to like ", id);
+        likeTweet(id);
+        setLiked(true);
+      } else {
+        alert("Post Already Liked By You");
+      }
+    };
     return (
       <div className="post" ref={ref}>
         <div className="post__avatar">
@@ -19,9 +44,11 @@ const Post = forwardRef(
             <div className="post__headerText">
               <h3>
                 {displayName}{" "}
-                <span className="post__headerSpecial">
-                  {verified && <VerifiedUserIcon className="post__badge" />} @
-                  {username}
+                <span>
+                  {verified && (
+                    <img alt="verified" width="10%" src={verified_photo} />
+                  )}{" "}
+                  <span className="handle">@{username}</span>
                 </span>
               </h3>
             </div>
@@ -33,7 +60,14 @@ const Post = forwardRef(
           <div className="post__footer">
             <ChatBubbleOutlineIcon fontSize="small" />
             <RepeatIcon fontSize="small" />
-            <FavoriteBorderIcon fontSize="small" />
+            <div>
+              {liked ? (
+                <FavoriteIcon fontSize="small" onClick={LikePost} />
+              ) : (
+                <FavoriteBorderIcon fontSize="small" onClick={LikePost} />
+              )}
+              <span>{likes}</span>
+            </div>
             <PublishIcon fontSize="small" />
           </div>
         </div>
@@ -42,4 +76,4 @@ const Post = forwardRef(
   }
 );
 
-export default Post;
+export default connect(null, { likeTweet })(Post);
