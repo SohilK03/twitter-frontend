@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./TweetBox.css";
-import { Avatar, Button } from "@material-ui/core";
+import { Avatar, Button } from "@mui/material/";
 // import db from "./firebase";
 import { connect } from "react-redux";
 import profilePhoto from "../Assets/profile-icon.png";
